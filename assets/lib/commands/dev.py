@@ -51,8 +51,8 @@ class stopstart:
             await botmsg.edit(embed=discord.Embed(title="Done, killing processes", color=errorcolor))
             await Client.close()
             logging.info("BOT SHUTTING DOWN")
-            try: os.system('taskkill /f /im python.exe')
-            except: os.system('killall -9 python3.6')
+            if sys.platform == "win32": os.system('taskkill /f /im python.exe')
+            else: os.system('killall -9 python3.6')
             break
     # Restart Command Block
     @commands.command(name="restart")
