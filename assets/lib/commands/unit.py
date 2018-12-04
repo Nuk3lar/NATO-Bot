@@ -8,7 +8,7 @@ from config.confmain import cwd, cwdmain, embedcolordark, embedcolorlight, error
 # Database linked command to check individual member's MOS Training.
 class information_database_command:
     def __init__(self, bot): self.bot = bot
-
+    def __unload(self): pass
 
     # Information Database Command
     @commands.command(name="info")
@@ -168,7 +168,7 @@ class information_database_command:
 
     @commands.command(name="callsign")
     @commands.cooldown(1, 1800, commands.BucketType.user)
-    async def _callsign(self, message):
+    async def _callsign(self, message, *, callsign : str = None):
         while True:
             if check_channel(message.channel.id) == False: # Lines 17-23 are Check Func
                 logging.info(f"User {message.author.id} tried to run a command in the wrong channel!")
@@ -177,15 +177,21 @@ class information_database_command:
                 await message_wrong_channel.delete()
                 await message.message.delete()
                 break
+            from config.confmain import dbconnect
+            db = dbconnect()
+            from assets.lib.functions.database import set_callsign
+            if not(callsign == None):
+                set_callsign(db, message.author, callsign)
+                await message.channel.send("", embed=discord.Embed(title=u'\u2705 Callsign set to: '+callsign, color=embedcolordark))
+                db[0].commit()
+                db[0].close()
+                break
             embed=discord.Embed(title="Set embed", description="Reply (within 10 secs) to set a callsign for +info",  color = embedcolordark)
             embed.add_field(name="Only set this to one specified in", value="<#501379425938571294>", inline = False)
             botmsg = await message.channel.send("", embed=embed)
             def check(m): return m.author == message.author
             try:
                 callsign = await bot.wait_for('message', timeout=10, check=check)
-                from config.confmain import dbconnect
-                db = dbconnect()
-                from assets.lib.functions.database import set_callsign
                 set_callsign(db, message.author, callsign.content)
                 embed.add_field(name=u'\u2705', value=f'Callsign set to {callsign.content}', inline = False)
                 await botmsg.edit(embed=embed)
@@ -196,6 +202,7 @@ class information_database_command:
                 embed.add_field(name=u'\u274C', value='Menu timed out', inline = False)
                 await botmsg.edit(embed=embed)
                 message.command.reset_cooldown(message)
+                db[0].close()
                 break
             break
 

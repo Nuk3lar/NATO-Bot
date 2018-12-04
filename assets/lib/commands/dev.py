@@ -16,6 +16,7 @@ def perm_check_superuser(id):
 
 class stopstart:
     def __init__(self, bot): self.bot = bot
+    def __unload(self): pass
     # Shutdown Command Block
     @commands.command(name='shutdown')
     async def _stop(self, message):
@@ -79,10 +80,10 @@ class stopstart:
             succ = 0
             fail = 0
             for extension in initial_extensions:
-                bot.unload_extension(extension)
+                self.bot.unload_extension(extension)
                 restartembed.add_field(name=extension, value='Unloaded.')
                 try:
-                    bot.load_extension(extension)
+                    self.bot.load_extension(extension)
                     restartembed.add_field(name=f'{extension}', value='Reloaded.', inline=False)
                     await botmsg.edit(embed=restartembed)
                     succ += 1
@@ -115,6 +116,7 @@ class stopstart:
 
 class load_unload:
     def __init__(self, bot): self.bot = bot
+    def __unload(self): pass
     # Load command block
     @commands.command(name="load")
     async def _load(self, message, *, part : str = None):
@@ -143,7 +145,7 @@ class load_unload:
             logging.info(f'[ExtensionManager] Attempting to load extension: assets.lib.{part}')
             botmsg = await message.channel.send("", embed=discord.Embed(title=f"Loading assets.lib.{part}", color=errorcolor))
             try:
-                bot.load_extension(f"assets.lib.{part}")
+                self.bot.load_extension(f"assets.lib.{part}")
                 loaded_extentions.append("assets.lib."+part)
                 await botmsg.edit(embed=discord.Embed(title=u'\u2705 Loaded Succsessfully', color=errorcolor))
                 logging.info(f'[ExtensionManager] Sucsessfuly loaded extension: assets.lib.{part}')
@@ -177,12 +179,15 @@ class load_unload:
                 await message.channel.send("", embed=discord.Embed(title=u"\u274C That is not loaded!", color=errorcolor))
                 logging.info(f'User {message.author.id} tried to unload extension: assets.lib.{part}, but it was not loaded!')
                 break
+            
+
             logging.info(f"User {message.author.id} ran command unload")
             logging.info(f'[ExtensionManager] Unloading extension: assets.lib.{part}')
+            self.bot.unload_extension(f"assets.lib.{part}")
+            loaded_extentions.remove(f"assets.lib.{part}")
             botmsg = await message.channel.send("", embed=discord.Embed(title=f"Unloading assets.lib.{part}", color=errorcolor))
             await botmsg.edit(embed=discord.Embed(title=u'\u2705 Unloaded Succsessfully', color=errorcolor))
             logging.info(f'[ExtensionManager] Sucsessfuly unloaded extension: assets.lib.{part}')
-            print(loaded_extentions)
             break
 
     # Reload command block
@@ -213,11 +218,12 @@ class load_unload:
             logging.info(f'[ExtensionManager] Attempting to reload extension: assets.lib.{part}')
             logging.info(f'[ExtensionManager] Unloading extension: assets.lib.{part}')
             botmsg = await message.channel.send("", embed=discord.Embed(title=f"Reloading assets.lib.{part}", color=errorcolor))
+            self.bot.unload_extension(f"assets.lib.{part}")
             await botmsg.edit(embed=discord.Embed(title=u'\u2705 Unloaded Succsessfully', color=errorcolor))
             loaded_extentions.remove(f"assets.lib.{part}")
             await botmsg.edit(embed=discord.Embed(title=f"Loading assets.lib.{part}", color=errorcolor))
             try:
-                bot.load_extension(f"assets.lib.{part}")
+                self.bot.load_extension(f"assets.lib.{part}")
                 loaded_extentions.append("assets.lib."+part)
                 await botmsg.edit(embed=discord.Embed(title=u'\u2705 Reloaded Succsessfully', color=errorcolor))
                 logging.info(f'[ExtensionManager] Sucsessfuly reloaded extension: assets.lib.{part}')
@@ -231,6 +237,7 @@ class load_unload:
 
 class misc_dev:
     def __init__(self, bot): self.bot = bot
+    def __unload(self): pass
 
     # Show loaded modules
     @commands.command(name="loaded")

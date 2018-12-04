@@ -27,6 +27,7 @@ def switch( ch, help_switch_cases, self, *args):
 
 class HelpCMD:
     def __init__(self, bot): self.bot = bot
+    def __unload(self): pass
     @commands.command(name='help')
     async def _help(self, message, *, part : str = None):
         while True:

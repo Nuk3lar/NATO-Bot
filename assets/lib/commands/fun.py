@@ -8,6 +8,7 @@ from config.confmain import cwd, cwdmain, embedcolordark, embedcolorlight, error
 # Games using the random lib as main functionality
 class random_game:
     def __init__(self, bot): self.bot = bot
+    def __unload(self): pass
     
     # Russian Roulette
     @commands.command(name="russian")

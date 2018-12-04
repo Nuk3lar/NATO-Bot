@@ -49,8 +49,8 @@ async def update_roles_task():
 
 class on_ready:
     # Setup INIT
-    def __init__(self, bot):
-        self.bot = bot
+    def __init__(self, bot): self.bot = bot
+    def __unload(self): pass
     @Client.event
     async def on_ready(self):
         print(f'[Bot user] {bot.user.name}\n[Bot ID] {bot.user.id}')
@@ -61,7 +61,7 @@ class on_ready:
 
 class on_join:
     def __init__(self, bot): self.bot = bot
-
+    def __unload(self): pass
     @Client.event
     async def on_member_join(self, member):
         channel = bot.get_channel(455355408719151106)
