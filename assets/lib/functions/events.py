@@ -3,7 +3,7 @@
 import discord, sys, asyncio, logging, traceback, os, sys, aiohttp
 from discord.ext.commands import Bot
 from discord.ext import commands
-from config.confmain import Client, bot, embedcolordark, embedcolorlight, buildid, cwd, cwdmain
+from config.confmain import Client, bot, embedcolordark, embedcolorlight, buildid, cwd, cwdmain, user_dm_message
 
 # Changing the Status Message
 
@@ -64,6 +64,9 @@ class on_join:
     def __unload(self): pass
     @Client.event
     async def on_member_join(self, member):
+        if member.dm_channel == None: dm_channel = await member.create_dm()
+        else: dm_channel = member.dm_channel
+        await member.dm_channel.send(f"Hi {member.mention}{user_dm_message}")
         channel = bot.get_channel(455355408719151106)
         await channel.send(f"{member.mention} Welcome to NRC!\nPlease check <#518000366856699915> for the rules and\n<#455359684761878528> for the current modpack.")
         from config.confmain import dbconnect

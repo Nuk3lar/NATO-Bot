@@ -92,6 +92,20 @@ embedcolorlight=0x3487C9
 embedcolordark=0x00408A
 errorcolor=0xb20000
 
+user_dm_message = """, welcome to NATO response unit, we are group of many milsim units that are gathered from around the world.
+If you want, you can just stay in the NATO response unit, or you can choose from one of the following groups:
+```Dark Owls- a PMC group created and Managed by Dark, they specialize in airborne infiltration, supporting main forces or just joining them in the hells of battlefield. You can expect to be given training and be part of small fireteam in brotherhood fashion.\n
+Royal Canadians Dragoons - those are our armoured units in NATO response team. They often fight through the visor of their iron Pegasus, they haven't been active for a while but when they are in action it's good to have them beside you. They are lead by Arakdar.\n
+USMC  - one of the most populated group in our unit, they are going on with big explosion in and leaving no one behind, if you been looking for some mediocre unit to join and have fun in masses this is the one to join. they are lead Wolf\n
+Lost legion - guys with a lot of fun, commonly fight in groups or join the other in the action. Lead by Mitchell\n
+Rangers - Heavy milsim unit which will kick your ass no matter how far you are, expect to be drilled. Otherwise they are fun guys who knows their ways around weapons. Lead by ETA.```
+You can find all the link to those units in the channel <#497948185881477160>\n
+Promotions are given for attending OP's and having particlar skills/traits\n
+We are limiting some equipment, you can see those in <#516768324475027466>\n
+We are going to be happy to fight along side you on our next OP which is each Saturday and Sunday at 18:00 GMT
+If you have any question, feel free to send a message to on of our Captains or to anyone with a role of Staff.
+Wish you luck and good kills."""
+
 # To load the config
 
 def setup(bot): pass
