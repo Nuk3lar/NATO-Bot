@@ -10,7 +10,6 @@ from config.cwd import cwd, cwdmain
 
 superusers = ["351211709492363264", # Doc#6431
                    "300285724752609280", # Mitchell#9371
-                   "250998121344008193", # Darksniped#0378
                    "201422669889929216", # Nukelar#2781
                    "446047536864690207"] # Philosophy#4859
 
@@ -24,8 +23,7 @@ def dbconnect():
     database = MySQLdb.connect(host=host,port=3306,user='bot',passwd=mysqlkey,db='nato_bot')
     return database, database.cursor()
 
-allowed_channels = [454666331430846476,
-                              513845240634015765]
+allowed_channels = [454666331430846476, 513845240634015765]
 
 def check_channel(id):
     if id in allowed_channels: return True

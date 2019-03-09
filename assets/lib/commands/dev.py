@@ -12,6 +12,44 @@ def perm_check_superuser(id):
     if str(id) in superusers: return True
     else: return False
 
+# Purge Commands
+
+class purge:
+    def __init__(self, bot): self.bot = bot
+    def __unload(self): pass
+    
+    @commands.command(name="purge")
+    async def _purge(self, message, *, to_purge : int = 1):
+        while True:
+            if perm_check_superuser(message.author.id) == False: 
+                logging.info(f"User {message.author.id} ran command shutdown and was denied!")
+                msg_no_perms = await message.channel.send("You can't do that Command!")
+                time.sleep(3)
+                await msg_no_perms.delete()
+                await message.message.delete()
+                break
+            logging.info(f"User {message.author.id} ran command purge")
+            msg_to_delete = []
+            async for msg in message.channel.history(limit = to_purge): msg_to_delete.append(msg)
+            if to_purge < 1:
+                msg_bad_num = await message.channel.send("Negative numbers dont work БЛЯДЬ")
+                time.sleep(3)
+                await msg_bad_num.delete()
+                break
+            if to_purge > 100:
+                for msg_num in range(len(msg_to_delete)): await msg_to_delete[msg_num].delete()
+            else: 
+                try: await message.channel.delete_messages(msg_to_delete)
+                except: 
+                    for msg_num in range(len(msg_to_delete)): await msg_to_delete[msg_num].delete()
+            if to_purge == 1: succ_msg = await message.channel.send("", embed=discord.Embed(title=u'\u2705 Purged '+str(to_purge)+' message!', color=errorcolor))
+            else: succ_msg = await message.channel.send("", embed=discord.Embed(title=u'\u2705 Purged '+str(to_purge)+' messages!', color=errorcolor))
+            time.sleep(5)
+            await succ_msg.delete()
+            break
+            
+
+
 # Stop/Restart
 
 class stopstart:
@@ -271,3 +309,4 @@ def setup(bot):
     bot.add_cog(stopstart(bot))
     bot.add_cog(load_unload(bot))
     bot.add_cog(misc_dev(bot))
+    bot.add_cog(purge(bot))

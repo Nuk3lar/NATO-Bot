@@ -12,10 +12,9 @@ async def status_task():
         await bot.change_presence(activity=discord.Activity(name='+help', type=0))
         await asyncio.sleep(20)
         await bot.change_presence(activity=discord.Activity(name="ARMA", type=0))
-        users = 0
         guild = bot.get_guild(455355408719151104)
         await asyncio.sleep(20)
-        await bot.change_presence(activity=discord.Activity(name=f'with {len(guild.members)} soilders', type=0))
+        await bot.change_presence(activity=discord.Activity(name=f'with {len(guild.members)} soldiers', type=0))
         await asyncio.sleep(20)
         
 
